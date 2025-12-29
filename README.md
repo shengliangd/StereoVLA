@@ -1,8 +1,7 @@
 # StereoVLA: Enhancing Vision-Language-Action Models with Stereo Vision
 
 [![arXiv](https://img.shields.io/badge/arXiv-2505.03233-df2a2a.svg)](https://arxiv.org/pdf/2512.21970)
-
-[![Static Badge](https://img.shields.io/badge/Project-Page-a)](https://shengliangd.github.io/StereoVLA/)
+[![Static Badge](https://img.shields.io/badge/Project-Page-a)](https://shengliangd.github.io/StereoVLA-Webpage/)
 
 Stereo cameras closely mimic human binocular vision, providing rich spatial cues critical for precise robotic manipulation. Despite their advantage, the adoption of stereo vision in vision-language-action models (VLAs) remains underexplored. In this work, we present StereoVLA, a VLA model that leverages rich geometric cues from stereo vision. We propose a novel Geometric-Semantic Feature Extraction module that utilizes vision foundation models to extract and fuse two key features: 1\) geometric features from subtle stereo-view differences for spatial perception; 2\) semantic-rich features from the monocular view for instruction following. Additionally, we propose an auxiliary Interaction-Region Depth Estimation task to further enhance spatial perception and accelerate model convergence. Extensive experiments show that our approach outperforms baselines by a large margin in diverse tasks under the stereo setting, and demonstrates strong robustness to camera pose variations.
 

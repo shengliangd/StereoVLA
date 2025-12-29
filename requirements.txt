@@ -1,0 +1,17 @@
+urchin
+transforms3d
+torch==2.6.0
+torchvision==0.21.0
+transformers==4.57.0
+accelerate==1.5.1
+timm==1.0.15
+sentencepiece==0.2.0
+pyzmq==26.3.0
+opencv-python==4.11.0.86
+transformations==2025.1.1
+numpy==1.26.0
+flash-attn@https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.1.post2/flash_attn-2.7.1.post2+cu12torch2.6cxx11abiFALSE-cp312-cp312-linux_x86_64.whl
+safetensors
+tqdm
+pydantic
+pillow

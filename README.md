@@ -25,7 +25,7 @@ Stereo cameras closely mimic human binocular vision, providing rich spatial cues
 
 4. Clone this repo, cd to the cloned directory, and install dependencies with `pip install -r requirements.txt`.
 
-5. Clone our modified FoundationStereo repo and install with `pip install -e .`.
+5. Clone our [modified FoundationStereo repo](https://github.com/shengliangd/StereoVLA-FoundationStereo) and install with `pip install -e .`.
 
 ### Running the Server
 

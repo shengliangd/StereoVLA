@@ -37,6 +37,17 @@ STORAGE_PATH=`readlink -f ../storage` python -m vla_network.scripts.serve --path
 
 For faster inference, add `--compile` to the command. It will speed up the inference around 50\% with a cost of slower model loading.
 
+## Supported Instructions
+
+Our model accepts the following instructions:
+
+- `pick up {object}`
+- `stack {color} bowl onto {color} bowl`
+- `stack {color} cube onto {color} cube`
+- `move {object} to {container}`
+- `move {object} to {color} {container}`
+- `pick up {color} {object}`
+
 ## Real-World Control Interface
 
 Setup real-world controller following [this repo](https://github.com/shengliangd/StereoVLA-real-world-controller).
@@ -56,4 +67,3 @@ Setup real-world controller following [this repo](https://github.com/shengliangd
 ```
 
 [![License](https://licensebuttons.net/l/by-nc/4.0/88x31.png)](LICENSE)
-

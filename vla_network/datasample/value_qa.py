@@ -1,7 +1,7 @@
 from .base import BaseSample
 
 from pydantic import ConfigDict
-from typing import Optional, List, OrderedDict, Tuple
+from typing import OrderedDict
 from PIL import Image
 
 from vla_network.utils.dtype import NdArray
@@ -18,7 +18,7 @@ class ValueQASample(BaseSample):
     image_key: str
     """The image key."""
     caption: str
-    """The caption of the query, e.g., 'the depth at (16, 21)'.
+    """The caption of the query, e.g., 'the depth at (0.432, 0.615)'.
     Do not use a whole sentence/question, so that the model can customize the prompt.
     """
     values: NdArray

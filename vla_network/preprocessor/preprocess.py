@@ -4,8 +4,7 @@ from PIL import Image
 import torch
 
 from vla_network.config.define import VLAConfig
-from vla_network.datasample import VLASample, BaseSample, BBoxSample
-from vla_network.datasample.value_qa import ValueQASample
+from vla_network.datasample import VLASample, BaseSample, BBoxSample, ValueQASample
 from vla_network.utils.image import resize_image_with_bbox, resize_image_with_position
 
 from functools import singledispatchmethod

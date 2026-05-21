@@ -1,0 +1,77 @@
+{
+  "model": {
+    "model_type": "AssembledVLA",
+    "ckpt": null,
+    "max_proprio_dim": 7,
+    "max_action_dim": 7,
+    "max_goal_dim": 6,
+    "proprio_rep": 2,
+    "goal_rep": 2,
+    "action_rep": 1,
+    "dt": 0.3,
+    "proprio_steps": 2,
+    "action_steps": 4,
+    "image_steps": 1,
+    "image_keys": ["left", "right"],
+    "image_size": 224,
+    "model_specific": {
+      "backbone_2d": {
+        "name": "dinosiglip_stereo_vcp",
+        "image_size": 224
+      },
+      "llm": {
+        "name": "internlm/internlm2-1_8b",
+        "max_len": 2048,
+        "special_tokens": [],
+        "pad_multiple_of": 64,
+        "attn_implementation": "sdpa"
+      },
+      "pred": "cot_flow_matching",
+      "action_expert": 1,
+      "action_expert_cfg": {
+        "hidden_size_scale": 2,
+        "intermediate_size_scale": 4
+      },
+      "flow_matching_cfg": {
+        "beta_alpha": 1.5,
+        "beta_beta": 1.0,
+        "time_min": 0.001,
+        "time_max": 1.0
+      },
+      "backbone_2d_mode": "freeze",
+      "projector_mode": "train",
+      "llm_mode": "train",
+      "action_token_num": 256
+    }
+  },
+  "train": {
+    "exp_name": "stereovla_public_finetune",
+    "max_steps": 20000,
+    "global_batch_size": 64,
+    "device_batch_size": 2,
+    "lr": 0.0001,
+    "lr_scheduler_type": "cosine",
+    "weight_decay": 0.0,
+    "max_grad_norm": 1.0,
+    "warmup_ratio": 0.03,
+    "log_step": 10,
+    "save_step": 2000,
+    "save_total_limit": 3,
+    "eval_step": 1000,
+    "eval_each": 8,
+    "num_workers": 2,
+    "deepspeed": null,
+    "fsdp": null,
+    "profiler": false,
+    "bf16": true,
+    "full_bf16": false,
+    "gradient_checkpointing": false,
+    "resume_from": null,
+    "resume_preprocessor": true,
+    "train_datasets": "./path/to/your_dataset,example_dataset,1",
+    "val_datasets": null,
+    "normalizer_ratio_limit": 0.01,
+    "normalizer_num_samples": 400,
+    "visualize": null
+  }
+}

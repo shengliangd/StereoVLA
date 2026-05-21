@@ -8,6 +8,7 @@ from typing import Optional, List, OrderedDict, Union, Dict, Any, Tuple
 import numpy as np
 import copy
 import torch
+from safetensors.torch import load_file
 from torch import nn
 from transformers import PreTrainedTokenizerBase, PreTrainedModel
 from transformers.modeling_outputs import CausalLMOutputWithPast
@@ -256,8 +257,21 @@ class AssembledVLA(nn.Module, BaseVLA):
         return state_dict
 
     def _load_pretrained(self, path: str):
-        state_dict = torch.load(path, map_location="cpu", weights_only=True)["model"]
+        if path.endswith(".safetensors"):
+            state_dict = load_file(path, device="cpu")
+        else:
+            state_dict = torch.load(path, map_location="cpu", weights_only=True)
+            if "model" in state_dict:
+                state_dict = state_dict["model"]
         state_dict = self._update_state_dict(state_dict)
+
+        if "projector" not in state_dict and any(k.startswith("projector.") for k in state_dict):
+            load_warn = self.load_state_dict(state_dict, strict=False)
+            log.info(f"Loaded model from {path}")
+            if len(load_warn.missing_keys) > 0 or len(load_warn.unexpected_keys) > 0:
+                log.warn(f'Model load warning: {load_warn}')
+            return
+
         if "backbone_2d" in state_dict:
             self.backbone_2d.load_state_dict(state_dict["backbone_2d"])
         self.projector.load_state_dict(state_dict["projector"])
@@ -286,7 +300,7 @@ class AssembledVLA(nn.Module, BaseVLA):
                 elif mode == "freeze":
                     getattr(self, m).requires_grad_(False)
                 else:
-                    raise NotImplementedError()
+                    raise ValueError(f"Unsupported training mode for {m}: {mode}")
 
         num_params = sum(p.numel() for p in self.parameters())
         num_train_params = sum(p.numel() for p in self.parameters() if p.requires_grad)
@@ -303,6 +317,8 @@ class AssembledVLA(nn.Module, BaseVLA):
         return torch.cat([orig[:1], img_info, orig[1:]], dim=0) # fmt: skip
     
     def get_proj_feat_2d(self, images: torch.FloatTensor) -> torch.FloatTensor:
+        model_dtype = self.llm.input_embedding.weight.dtype
+        images = images.to(dtype=model_dtype)
         with torch.set_grad_enabled(False):
             feat_2d = self.backbone_2d(images)
         proj_feat_2d = self.projector(feat_2d)

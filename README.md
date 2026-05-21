@@ -13,7 +13,7 @@ Stereo cameras closely mimic human binocular vision, providing rich spatial cues
 
 ### Environment Setup
 
-1. Create a directory to place the model code and weight in the subsequent steps, and cd to it.
+1. Create a directory for the model code and weights, then `cd` into it.
 
 2. Create a new conda environment:
    ```bash
@@ -25,17 +25,17 @@ Stereo cameras closely mimic human binocular vision, providing rich spatial cues
 
 4. Clone this repo, cd to the cloned directory, and install dependencies with `pip install -r requirements.txt`.
 
-5. Clone our [modified FoundationStereo repo](https://github.com/shengliangd/StereoVLA-FoundationStereo) and install with `pip install -e .`.
+5. Clone our [modified FoundationStereo repo](https://github.com/shengliangd/StereoVLA-FoundationStereo), `cd` into it, and install it with `pip install -e .`.
 
 ### Running the Server
 
-To run the model server:
+Run the model server from the cloned repository directory, with `../storage` pointing to the Hugging Face download directory:
 
 ```bash
 STORAGE_PATH=`readlink -f ../storage` python -m vla_network.scripts.serve --path ../storage/stereovla/checkpoint/model.safetensors --port 6666
 ```
 
-For faster inference, add `--compile` to the command. It will speed up the inference around 50\% with a cost of slower model loading.
+For faster inference, add `--compile` to the command. This speeds up inference by around 50\%, at the cost of slower model loading.
 
 ## Supported Instructions
 
@@ -50,7 +50,11 @@ Our model accepts the following instructions:
 
 ## Real-World Control Interface
 
-Setup real-world controller following [this repo](https://github.com/shengliangd/StereoVLA-real-world-controller).
+Set up the real-world controller following [this repo](https://github.com/shengliangd/StereoVLA-real-world-controller).
+
+## Training and Fine-tuning
+
+See [docs/training.md](docs/training.md) for the training workflow, custom dataset interface, fine-tuning from the released checkpoint, and the dummy-data smoke test.
 
 ## Citation
 

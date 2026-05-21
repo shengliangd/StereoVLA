@@ -3,6 +3,7 @@ transforms3d
 torch==2.6.0
 torchvision==0.21.0
 transformers==4.57.0
+huggingface_hub[cli]
 accelerate==1.5.1
 timm==1.0.15
 sentencepiece==0.2.0

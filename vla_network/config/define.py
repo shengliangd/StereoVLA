@@ -203,6 +203,7 @@ class VLATrainConfig(BaseModel):
     eval_step: int
     eval_each: int
     num_workers: int
+    shuffle_buffer_size: int = 100
     deepspeed: Optional[str]
     fsdp: Optional[str]
     profiler: bool
@@ -265,6 +266,7 @@ class VLATrainConfig(BaseModel):
             eval_delay=self.eval_step,
             save_strategy="steps",
             save_steps=self.save_step,
+            save_safetensors=False,
             save_total_limit=self.save_total_limit,
             dataloader_drop_last=True,
             dataloader_num_workers=self.num_workers,
@@ -277,7 +279,7 @@ class VLATrainConfig(BaseModel):
                 limit_all_gathers=True,
                 use_orig_params=True,
             ),
-            seed=42 + int(os.environ["RANK"]),  # not using .get() to avoid quite bug in case RANK var deprecated
+            seed=42 + int(os.environ.get("RANK", "0")),
         )
 
 

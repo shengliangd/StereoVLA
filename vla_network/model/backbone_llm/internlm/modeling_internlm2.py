@@ -56,10 +56,11 @@ from .configuration_internlm2 import InternLM2Config
 
 
 try:
-    from flash_attn import flash_attn_func, flash_attn_varlen_func # type: ignore
-    from flash_attn.bert_padding import index_first_axis, pad_input, unpad_input # type: ignore
-except:
-    pass
+    from flash_attn import flash_attn_func, flash_attn_varlen_func
+    from flash_attn.bert_padding import index_first_axis, pad_input, unpad_input
+except ImportError:
+    flash_attn_func = flash_attn_varlen_func = None
+    index_first_axis = pad_input = unpad_input = None
 
 try:
     support_bf16_triu = torch.__version__ >= "2.1.0"
@@ -67,6 +68,8 @@ except Exception:
     support_bf16_triu = False
 
 logger = logging.get_logger(__name__)
+if not hasattr(logger, "warning_once"):
+    logger.warning_once = logger.warning
 
 _CONFIG_FOR_DOC = "InternLM2Config"
 
